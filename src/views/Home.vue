@@ -76,6 +76,7 @@ export default {
 	#submit:hover{
 		background: none;
 		color: #002C3E;
+		transition: 0.2s;
 	}
 
 </style>

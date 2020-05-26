@@ -1,9 +1,9 @@
 <template>
     <div id="addstop-div">
         <div id="add-stop">
-            <form id="details-form">
+            <form id="details-form" @submit="addStop">
                 <div id="stop-name">
-                    <select name="stops" id="stop-menu">
+                    <select name="stops" id="stop-menu" v-model="stop_name" required>
                         <option value="" disabled selected hidden>Choose stop...</option>
                         <option value="Trivandrum">Trivandrum</option>
                         <option value="East Fort">East Fort</option>
@@ -15,10 +15,10 @@
                 </div>
                 <label id="time-label">Scheduled <br/> time :</label>
                 <div id="stop-time">
-                    <input type="time" id="time-input">
+                    <input type="time" id="time-input" v-model="stop_time" required>
                 </div>
                 <div id="stop-set">
-                    <input type="button" value="+ STOP" id="add-stop-btn">
+                    <input type="submit" value="+ STOP" id="add-stop-btn">
                 </div>
             </form>
         </div>
@@ -27,13 +27,32 @@
 
 <script>
 export default {
+    name: 'AddStop',
+    data() {
+        return {
+            stop_name: '',
+            stop_time: ''
+        }
+    },
+    methods: {
+        addStop(e) {
+            e.preventDefault();
+            const newStop = {
+                stop_name: this.stop_name,
+                stop_time: this.stop_time
+            }
+            this.$emit('add-stop', newStop);
+            this.stop_name = '';
+            this.stop_time = '';
+        }
+    }
     
 }
 </script>
 
 <style scoped>
     #add-stop {
-        position: absolute;
+        position: relative;
         bottom: 0;
         /* height: 50px; */
         width: 100%;
@@ -100,7 +119,6 @@ export default {
     #stop-set {
         margin: 15px;
         margin-left: 30px;
-
     }
 
     #add-stop-btn {
@@ -117,6 +135,7 @@ export default {
     #add-stop-btn:hover {
         background: white;
         color: #002C3E;
+        transition: 0.2s;
     }
 
 </style>
