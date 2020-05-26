@@ -1,5 +1,5 @@
 <template>
-    <div id="top-heder">
+    <div id="top-header">
         <nav>
             <input type="checkbox" id="check">
             <label for="check" id="menu-btn">
