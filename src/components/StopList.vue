@@ -21,7 +21,7 @@ export default {
     #stops-box{
         height: 300px;
         width: 600px;
-        background: grey;
+        background: rgb(196, 196, 196);
         border-radius: 10px;
         position: relative;
     }

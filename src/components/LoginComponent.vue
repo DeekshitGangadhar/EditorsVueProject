@@ -72,7 +72,7 @@ export default {
         outline: none;
         background: none;
         font-size: 18px;
-        width: 80px;
+        width: 100%;
         float: left;
         margin: 0 10px;
     }
