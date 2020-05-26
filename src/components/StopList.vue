@@ -3,11 +3,9 @@
         <div id="stops-box">
             <ul>
                 <li id="stopheadinglist"><div id="nameheading">Stop Name</div><div id="timeheading">Scheduled Time</div></li>
-                <!-- <li class="addedstopitem"><input type="text" class="stopname" placeholder="Stop Name" disabled><input type="text" class="stoptime" placeholder="Scheduled Time" disabled><button class="del">x</button></li> -->
                 <div v-bind:key="stop.stop_name" v-for="stop in stops">
                     <StopItem v-bind:stop="stop" v-on:del-stop="deleteStop" />
                 </div>
-                <!-- <StopItem v-bind:key="stop" v-for="stop in stops"/> -->
             </ul>
         </div>
         <AddStop v-on:add-stop="addStop" />
@@ -31,7 +29,6 @@ export default {
     },
     methods: {
         addStop(stop) {
-            // const { stop_name, stop_time } = stop;
             this.stops = [...this.stops, stop];
         },
         deleteStop(s_name) {
