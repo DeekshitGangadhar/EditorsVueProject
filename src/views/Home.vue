@@ -5,15 +5,15 @@
 			<form>
 				<div class="route-details">
 					<label for="route-id">ROUTE ID:</label>
-					<input type="text" name="route-id" id="route-id" placeholder="Route ID">
+					<input type="text" name="route-id" id="route-id" placeholder="Route ID" v-model="route_id" required>
 				</div>
 				<div class="route-details">
 					<label for="route-name">ROUTE NAME:</label>
-					<input type="text" name="route-name" id="route-name" placeholder="Source-Destination">
+					<input type="text" name="route-name" id="route-name" placeholder="Source-Destination" v-model="route_name" required>
 				</div>
+				<StopList v-on:submit-stops="submitStops" class="route-details" />
+				<input type="submit" id="submit" value="Add Route" disabled v-on:click="addRoute">
 			</form>
-			<StopList class="route-details" />
-			<input type="button" id="submit" value="Add Route" disabled>
 		</div>
 	</div>
 </template>
@@ -25,9 +25,26 @@ import AppHeader from '@/components/Header.vue'
 
 export default {
 	name: 'Home',
+	data() {
+		return {
+			route_id: '',
+			route_name: '',
+			stops_list: null
+		}
+	},
 	components: {
 		StopList,
 		AppHeader
+	},
+	methods: {
+		addRoute() {
+			console.log("addRoute");
+		},
+		submitStops(added_stops) {
+			this.stops_list = added_stops;
+
+			document.getElementById('submit').disabled = false;
+		}
 	}
 }
 </script>

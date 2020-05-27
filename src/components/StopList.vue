@@ -4,14 +4,14 @@
             <ul>
                 <li id="stopheadinglist"><div id="nameheading">Stop Name</div><div id="timeheading">Scheduled Time</div></li>
                 <div v-bind:key="stop.stop_name" v-for="stop in stops">
-                    <StopItem v-bind:stop="stop" v-on:del-stop="deleteStop" />
+                    <StopItem v-bind:stop="stop" v-bind:flag="flag" v-on:del-stop="deleteStop" />
                 </div>
             </ul>
         </div>
-        <AddStop v-on:add-stop="addStop" id="add-stop-component"/>
+        <AddStop v-on:add-stop="addStopToList" id="add-stop-component"/>
         <div id="add-stop-div">
-            <button id="addstopbtn" v-on:click="showStopForm">Add Stop</button>
-            <button id="submitstopbtn" disabled v-on:click="submitStops">Submit Stops</button>
+            <input type="button" id="addstopbtn" v-on:click="showStopForm" value="Add Stop">
+            <input type="button" id="submitstopbtn" disabled v-on:click="submitStops" value="Submit Stops">
         </div>
     </div>
 </template>
@@ -28,11 +28,12 @@ export default {
     },
     data() {
         return {
-            stops: []
+            stops: [],
+            flag: false
         }
     },
     methods: {
-        addStop(stop) {
+        addStopToList(stop) {
             this.stops = [...this.stops, stop];
 
             var addstopcomponent = document.getElementById("add-stop-component");
@@ -63,6 +64,12 @@ export default {
         },
         submitStops() {
             console.log("Submit stops button clicked");
+            const added_stops = this.stops;
+            this.$emit('submit-stops', added_stops);
+
+            document.getElementById('addstopbtn').disabled = true;
+            document.getElementById('submitstopbtn').disabled = true;
+            this.flag = true;
         }
     }
 }
@@ -80,7 +87,7 @@ export default {
         border-top-right-radius: 0;
     }
 
-    #add-stop-div button {
+    #add-stop-div input {
         padding: 10px;
         margin: 10px;
         color: white;
@@ -97,17 +104,17 @@ export default {
         float: right;
     }
 
-    #submitstopbtn:disabled {
+    #add-stop-div input:disabled {
         cursor: not-allowed;
         color: grey;
     }
 
-    #add-stop-div button:hover:disabled {
+    #add-stop-div input:hover:disabled {
         background: #002C3E;
         color: grey;
     }
 
-    #add-stop-div button:hover {
+    #add-stop-div input:hover {
         background: white;
         color: #002C3E;
         transition: 0.2s;

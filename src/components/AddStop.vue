@@ -1,7 +1,7 @@
 <template>
     <div id="addstop-div">
         <div id="add-stop">
-            <form id="details-form" @submit="addStop">
+            <form id="details-form" >
                 <div id="stop-name">
                     <select name="stops" id="stop-menu" v-model="stop_name" required>
                         <option value="" disabled selected hidden>Choose stop...</option>
@@ -13,7 +13,7 @@
                     <input type="time" id="time-input" v-model="stop_time" required>
                 </div>
                 <div id="stop-set">
-                    <input type="submit" value="+ STOP" id="add-stop-btn">
+                    <input type="submit" value="+ STOP" id="add-stop-btn" v-on:click="addStop">
                 </div>
             </form>
         </div>

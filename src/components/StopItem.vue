@@ -3,7 +3,7 @@
         <div class="addedstopitem">
             <input type="text" class="stopname" placeholder="Stop Name" disabled v-bind:value="stop.stop_name">
             <input type="text" class="stoptime" placeholder="Scheduled Time" disabled v-bind:value="stop.stop_time">
-            <button @click="$emit('del-stop', stop.stop_name)" class="del">x</button>
+            <button @click="$emit('del-stop', stop.stop_name)" class="del" v-bind:disabled="flag">x</button>
         </div>
     </div>
 </template>
@@ -11,7 +11,7 @@
 <script>
 export default {
     name: 'StopItem',
-    props: ['stop']
+    props: ['stop', 'flag']
 }
 </script>
 
@@ -44,6 +44,10 @@ export default {
         cursor: pointer;
         font-size: 10px;
         font-weight: bold;
+    }
+
+    .del:disabled {
+        display: none;
     }
 
     .del:hover {
