@@ -5,12 +5,7 @@
                 <div id="stop-name">
                     <select name="stops" id="stop-menu" v-model="stop_name" required>
                         <option value="" disabled selected hidden>Choose stop...</option>
-                        <option value="Trivandrum">Trivandrum</option>
-                        <option value="East Fort">East Fort</option>
-                        <option value="Statue">Statue</option>
-                        <option value="Palayam">Palayam</option>
-                        <option value="Museum">Museum</option>
-                        <option value="Vellayambalam">Vellayambalam</option>
+                        <option v-bind:value="eachstop" v-bind:key="eachstop.stop_name" v-for="eachstop in all_stops" >{{ eachstop.stop_name }}</option>
                     </select>
                 </div>
                 <label id="time-label">Scheduled <br/> time :</label>
@@ -31,22 +26,36 @@ export default {
     data() {
         return {
             stop_name: '',
-            stop_time: ''
+            stop_time: '',
+            stop_id: '',
+            all_stops: []
         }
     },
     methods: {
         addStop(e) {
             e.preventDefault();
             const newStop = {
-                stop_name: this.stop_name,
-                stop_time: this.stop_time
+                stop_name: this.stop_name.stop_name,
+                stop_time: this.stop_time,
+                stop_id: this.stop_name.stop_id
             }
             this.$emit('add-stop', newStop);
             this.stop_name = '';
             this.stop_time = '';
         }
+    },
+    created() {
+        fetch("http://127.0.0.1:8000/editor/stopslite/", {
+            method: "GET"
+        })
+        .then((response) => {
+            console.log("stopslite reponse GET");
+            return response.json();
+        })
+        .then((data) => {
+            this.all_stops = data.response;
+        });
     }
-    
 }
 </script>
 

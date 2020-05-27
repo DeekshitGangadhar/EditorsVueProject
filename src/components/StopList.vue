@@ -8,7 +8,11 @@
                 </div>
             </ul>
         </div>
-        <AddStop v-on:add-stop="addStop" />
+        <AddStop v-on:add-stop="addStop" id="add-stop-component"/>
+        <div id="add-stop-div">
+            <button id="addstopbtn" v-on:click="showStopForm">Add Stop</button>
+            <button id="submitstopbtn" disabled v-on:click="submitStops">Submit Stops</button>
+        </div>
     </div>
 </template>
 
@@ -30,15 +34,89 @@ export default {
     methods: {
         addStop(stop) {
             this.stops = [...this.stops, stop];
+
+            var addstopcomponent = document.getElementById("add-stop-component");
+            var addstopdiv = document.getElementById("add-stop-div");
+            var stopsubmitbtn = document.getElementById("submitstopbtn");
+
+            if(stopsubmitbtn.disabled == true && this.stops.length >= 2) {
+                stopsubmitbtn.disabled = false;
+            }
+
+            addstopcomponent.style.display = "none";
+            addstopdiv.style.display = "block";
         },
         deleteStop(s_name) {
             this.stops = this.stops.filter(stop => stop.stop_name !== s_name);
+
+            if(this.stops.length < 2) {
+                var stopsubmitbtn = document.getElementById("submitstopbtn");
+                stopsubmitbtn.disabled = true;
+            }
+        },
+        showStopForm() {
+            var addstopcomponent = document.getElementById("add-stop-component");
+            var addstopdiv = document.getElementById("add-stop-div");
+
+            addstopcomponent.style.display = "block";
+            addstopdiv.style.display = "none";
+        },
+        submitStops() {
+            console.log("Submit stops button clicked");
         }
     }
 }
 </script>
 
 <style scoped>
+    #add-stop-div {
+        position: relative;
+        bottom: 0;
+        /* height: 50px; */
+        width: 100%;
+        background: rgb(0, 77, 107);
+        border-radius: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    #add-stop-div button {
+        padding: 10px;
+        margin: 10px;
+        color: white;
+        background: #002C3E;
+        border: 2px solid #002C3E;
+        border-radius: 10px;
+        font-weight: bold;
+        font-size: 15px;
+        cursor: pointer;
+        outline: none;
+    }
+
+    #submitstopbtn{
+        float: right;
+    }
+
+    #submitstopbtn:disabled {
+        cursor: not-allowed;
+        color: grey;
+    }
+
+    #add-stop-div button:hover:disabled {
+        background: #002C3E;
+        color: grey;
+    }
+
+    #add-stop-div button:hover {
+        background: white;
+        color: #002C3E;
+        transition: 0.2s;
+    }
+
+    #add-stop-component{
+        display: none;
+    }
+
     #stops-box{
         height: 350px;
         width: 600px;

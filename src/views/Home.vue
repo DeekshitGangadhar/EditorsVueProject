@@ -13,7 +13,7 @@
 				</div>
 			</form>
 			<StopList class="route-details" />
-			<input type="button" id="submit" value="Add Route">
+			<input type="button" id="submit" value="Add Route" disabled>
 		</div>
 	</div>
 </template>
@@ -77,6 +77,12 @@ export default {
 		background: none;
 		color: #002C3E;
 		transition: 0.2s;
+	}
+
+	#submit:disabled, #submit:disabled:hover {
+		background-color: #002C3E;
+		color: grey;
+		cursor: not-allowed;
 	}
 
 </style>
